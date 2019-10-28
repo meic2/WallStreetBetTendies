@@ -80,7 +80,14 @@ DATABASES = {
 		'USER': 'wsb_django_user',
 		'PASSWORD': '411_wsb_tendies',
 		'HOST': 'fa19-cs411-048.cs.illinois.edu'
-    }
+    },
+	'keywords': {
+		'ENGINE': 'djongo',
+		'NAME': 'wsb_tendies',
+		'USER': 'wsb_django_user',
+		'PASSWORD': '411_wsb_tendies',
+		'HOST': 'fa19-cs411-048.cs.illinois.edu'
+	}
 }
 
 

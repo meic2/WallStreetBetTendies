@@ -11,10 +11,10 @@ Parameters that user can specify: stock symbol, time range, subreddit
 
 ## Setup:
 1. Sign in to VM (upload SSH public key to VM of local device if necessary).
-2. Install Postgres SQL on VM, start service, and add user with password.
-https://docs.microsoft.com/en-us/azure/virtual-machines/linux/postgresql-install
+2. Install Postgres SQL on VM, start service, and add user with password.\
+https://docs.microsoft.com/en-us/azure/virtual-machines/linux/postgresql-install\
 https://www.a2hosting.com/kb/developer-corner/testing-and-development/creating-a-postgresql-installation-for-local-testing
-3. Run below command to view Postgres data and config directory:
+3. Run below command to view Postgres data and config directory:\
 ```sudo -u postgres psql -c "SHOW data_directory";```
-4. Uncomment listen_address and port line in postgresql.conf and add host 0.0.0.0/0 to accept non-local connections.
+4. Uncomment listen_address and port line in postgresql.conf and add 'host 0.0.0.0/0' to accept non-local connections.
 5. Restart Postgres service and add database settings in Django project under settings.py. 
