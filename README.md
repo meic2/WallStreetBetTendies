@@ -16,5 +16,5 @@ https://docs.microsoft.com/en-us/azure/virtual-machines/linux/postgresql-install
 https://www.a2hosting.com/kb/developer-corner/testing-and-development/creating-a-postgresql-installation-for-local-testing
 3. Run below command to view Postgres data and config directory:\
 ```sudo -u postgres psql -c "SHOW data_directory";```
-4. Uncomment listen_address and port line in postgresql.conf and add 'host 0.0.0.0/0' to accept non-local connections.
+4. Uncomment listen_address and port line in postgresql.conf. Update localhost to '*' and add 'host 0.0.0.0/0' to accept non-local connections.
 5. Restart Postgres service and add database settings in Django project under settings.py. 
