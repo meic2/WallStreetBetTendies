@@ -8,3 +8,13 @@ Dashboard that performs SQL queries in order to display insights:
 Parameters that user can specify: stock symbol, time range, subreddit
 1. Num of positive sentiment posts/comments vs. num of negative sentiment posts/comments vs. stock price movement (how does stock perform in following days/months after positive or negative comments, does prior drastic stock price chance affect subreddit's sentiment of stock)
 2. Most common keywords associated with stock during different volatility periods (most common keyword when stock was dropping rapidly)
+
+## Setup:
+1. Sign in to VM (upload SSH public key to VM of local device if necessary).
+2. Install Postgres SQL on VM, start service, and add user with password.
+https://docs.microsoft.com/en-us/azure/virtual-machines/linux/postgresql-install
+https://www.a2hosting.com/kb/developer-corner/testing-and-development/creating-a-postgresql-installation-for-local-testing
+3. Run below command to view Postgres data and config directory:
+```sudo -u postgres psql -c "SHOW data_directory";```
+4. Uncomment listen_address and port line in postgresql.conf and add host 0.0.0.0/0 to accept non-local connections.
+5. Restart Postgres service and add database settings in Django project under settings.py. 

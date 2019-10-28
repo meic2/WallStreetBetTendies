@@ -76,10 +76,10 @@ WSGI_APPLICATION = 'tendies.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'tendies',
-		'USER': 'cs411bets_nishanthrs',
-		'PASSWORD': 'wsb_tendies',
-		'HOST': 'cs411bets.web.illinois.edu'
+        'NAME': 'wsb_tendies',
+		'USER': 'wsb_django_user',
+		'PASSWORD': '411_wsb_tendies',
+		'HOST': 'fa19-cs411-048.cs.illinois.edu'
     }
 }
 
