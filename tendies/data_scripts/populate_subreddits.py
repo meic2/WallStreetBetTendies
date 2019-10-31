@@ -21,7 +21,11 @@ def upload_subreddit_data(reddit, subreddit_name, conn):
 
     cur = conn.cursor()
 
-    cur.execute('INSERT INTO Subreddit (subreddit_name, num_followers, overview) VALUES (%s, %s, %s)', (subreddit_name, num_subscribers, overview))
+    cur.execute('UPDATE Subreddit SET num_followers={} WHERE subreddit_name=\'{}\''.format(num_subscribers, subreddit_name))
+    cur.execute(
+        'INSERT INTO Subreddit (subreddit_name, num_followers, overview) SELECT %s, %s, %s WHERE NOT EXISTS (SELECT 1 FROM Subreddit WHERE subreddit_name = %s)',
+        (subreddit_name, num_subscribers, overview, subreddit_name)
+    )
     conn.commit()
 
     cur.close()
@@ -39,8 +43,11 @@ def upload_subreddit_posts_and_comments(reddit, subreddit_name, conn):
         post_comments = post.comments
 
         cur.execute(
-            'INSERT INTO Post (post_id, post_title, post_description, post_date, subreddit_name, post_op, num_upvotes) VALUES (%s, %s, %s, %s, %s, %s, %s)',
-            (post.id, post.title, post.selftext, post_time, subreddit_name, post.author.name, post.score))
+            'UPDATE Post SET num_upvotes={} WHERE post_id=\'{}\''.format(post.score, post.id)
+        )
+        cur.execute(
+            'INSERT INTO Post (post_id, post_title, post_description, post_date, subreddit_name, post_op, num_upvotes) SELECT %s, %s, %s, %s, %s, %s, %s WHERE NOT EXISTS (SELECT 1 FROM Post WHERE post_id = %s)',
+            (post.id, post.title, post.selftext, post_time, subreddit_name, post.author.name, post.score, post.id))
         conn.commit()
 
         for top_level_comment in post.comments:
@@ -55,10 +62,13 @@ def upload_subreddit_posts_and_comments(reddit, subreddit_name, conn):
                 top_level_comment_op = top_level_comment.author.name
 
             cur.execute(
-                'INSERT INTO Comment (comment_id, comment_text, comment_date, post_id, subreddit_name, comment_op, num_upvotes) VALUES (%s, %s, %s, %s, %s, %s, %s)',
+                'UPDATE Comment SET num_upvotes={} WHERE comment_id=\'{}\''.format(top_level_comment.score, top_level_comment.id)
+            )
+            cur.execute(
+                'INSERT INTO Comment (comment_id, comment_text, comment_date, post_id, subreddit_name, comment_op, num_upvotes) SELECT %s, %s, %s, %s, %s, %s, %s WHERE NOT EXISTS (SELECT 1 FROM Comment WHERE comment_id = %s)',
                 (top_level_comment.id, top_level_comment.body,
                  top_level_comment_time, post.id, subreddit_name,
-                 top_level_comment_op, top_level_comment.score))
+                 top_level_comment_op, top_level_comment.score, top_level_comment.id))
 
     cur.close()
 
@@ -77,6 +87,7 @@ conn = psycopg2.connect(
 )
 
 subreddits = ['investing', 'stocks', 'wallstreetbets', 'StockMarket', 'economy']
+# subreddits = ['business']
 for subreddit_name in subreddits:
     upload_subreddit_data(reddit_auth, subreddit_name, conn)
     upload_subreddit_posts_and_comments(reddit_auth, subreddit_name, conn)

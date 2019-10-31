@@ -72,7 +72,8 @@ def upload_to_db(stock_tick_data):
 
 
 # NOTE: Can only make 5 requests for stock tick data per minute
-tech_stock_tick_data = load_tick_data(['AAPL', 'GOOG', 'FB', 'MSFT', 'AMZN'])
+# tech_stock_tick_data = load_tick_data(['AAPL', 'GOOG', 'FB', 'MSFT', 'AMZN'])
+tech_stock_tick_data = load_tick_data(['FB', 'AMZN'])
 try:
     upload_to_db(tech_stock_tick_data)
 except (Exception, psycopg2.DatabaseError) as error:
