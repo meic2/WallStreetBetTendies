@@ -5,3 +5,4 @@ pandas
 numpy
 requests
 praw
+django-cors-headers
