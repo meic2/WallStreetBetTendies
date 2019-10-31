@@ -27,13 +27,14 @@ def get_stock_tick_data(request, stock_symbol, start_date, end_date):
 
     print(get_stock_tick_data_query)
 
-    closing_prices = {}
+    closing_prices = {stock_symbol: []}
 
     cur.execute(get_stock_tick_data_query)
     conn.commit()
 
     for ts, close_price in cur:
-        closing_prices[ts.strftime('%Y-%m-%d')] = close_price
+        price_at_time = {'date': ts, 'close_price': close_price}
+        closing_prices[stock_symbol].append(price_at_time)
         # print(close_price)
 
     cur.close()
