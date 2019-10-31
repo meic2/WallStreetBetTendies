@@ -18,3 +18,8 @@ https://www.a2hosting.com/kb/developer-corner/testing-and-development/creating-a
 ```sudo -u postgres psql -c "SHOW data_directory";```
 4. Uncomment listen_address and port line in postgresql.conf. Update localhost to '*' and add 'host 0.0.0.0/0' to accept non-local connections.
 5. Restart Postgres service and add database settings in Django project under settings.py. 
+
+## Endpoints:
+1. Stock Tick Data endpoint: <br>
+```tick_data/AAPL/2017-01-01/2017-01-30``` <br>
+2. 
