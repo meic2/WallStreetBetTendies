@@ -7,7 +7,7 @@ import urllib
 
 
 def load_av_credentials():
-    with open('av_credentials.json') as f:
+    with open('data_scripts/av_credentials.json') as f:
         av_credentials = json.load(f)
         av_api_key = av_credentials['api_key']
     return av_api_key
@@ -36,6 +36,7 @@ def load_tick_data(stock_symbols):
 
     return symbols_tick_data
 
+
 def upload_to_db(stock_tick_data):
     conn = psycopg2.connect(
         host="fa19-cs411-048.cs.illinois.edu",
@@ -63,18 +64,19 @@ def upload_to_db(stock_tick_data):
                 'VALUES (\'{}\',\'{}\',{},{},{},{},{})'.format(
                     date, stock, open_price, high_price, low_price, close_price, volume
                 )
-            )  # TODO: Add fucntionality to ignore duplicates!
+            )  # TODO: Add fucntionality to ignore duplicates (UPSERT)!
 
             cur.execute(insert_stock_tick_data_query)
             conn.commit()
 
     cur.close()
 
-
+'''
 # NOTE: Can only make 5 requests for stock tick data per minute
-# tech_stock_tick_data = load_tick_data(['AAPL', 'GOOG', 'FB', 'MSFT', 'AMZN'])
-tech_stock_tick_data = load_tick_data(['FB', 'AMZN'])
+tech_stock_tick_data = load_tick_data(['AAPL', 'GOOG', 'FB', 'MSFT', 'AMZN'])
+# tech_stock_tick_data = load_tick_data(['FB', 'AMZN'])
 try:
     upload_to_db(tech_stock_tick_data)
 except (Exception, psycopg2.DatabaseError) as error:
     print('ERROR with uploading tick data: ', error)
+'''

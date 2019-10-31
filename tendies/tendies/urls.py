@@ -16,13 +16,23 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
-from .views import get_stock_tick_data
+from .views import get_stock_tick_data, delete_stock_tick_data, insert_stock_tick_data
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path(
         'tick_data/<str:stock_symbol>/<str:start_date>/<str:end_date>', 
         get_stock_tick_data, 
-        name='stock_tick_data'
+        name='get_stock_tick_data'
+    ),
+    path(
+        'delete_tick_data/<str:stock_symbol>',
+        delete_stock_tick_data,
+        name='delete_stock_tick_data'
+    ),
+    path(
+        'insert_tick_data/<str:stock_symbol>',
+        insert_stock_tick_data,
+        name='insert_stock_tick_data'
     )
 ]
