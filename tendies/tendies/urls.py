@@ -16,6 +16,13 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
+from .views import get_stock_tick_data
+
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path(
+        'tick_data/<str:stock_symbol>/<str:start_date>/<str:end_date>', 
+        get_stock_tick_data, 
+        name='stock_tick_data'
+    )
 ]

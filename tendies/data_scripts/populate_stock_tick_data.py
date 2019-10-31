@@ -1,9 +1,7 @@
 import collections
 import datetime
 import json
-import pandas as pd
 import psycopg2
-import numpy as np
 import requests
 import urllib
 

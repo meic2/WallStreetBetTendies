@@ -4,3 +4,4 @@ djongo
 pandas
 numpy
 requests
+praw
