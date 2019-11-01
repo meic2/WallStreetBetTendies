@@ -58,14 +58,20 @@ def upload_to_db(stock_tick_data):
             close_price = float(prices['4. close'])
             volume = int(prices['5. volume'])
 
+            update_stock_tick_data_query = (
+                'UPDATE StockTickData SET low_price={}, high_price={}, open_price={}, close_price={}, volume={} WHERE ts=\'{}\' AND stock_symbol=\'{}\''.format(
+                    low_price, high_price, open_price, close_price, volume, date, stock
+                )
+            )
             insert_stock_tick_data_query = (
                 'INSERT INTO StockTickData '
                 '(ts, stock_symbol, low_price, high_price, open_price, close_price, volume) '
-                'VALUES (\'{}\',\'{}\',{},{},{},{},{})'.format(
-                    date, stock, open_price, high_price, low_price, close_price, volume
+                'SELECT \'{}\', \'{}\', {}, {}, {}, {}, {} WHERE NOT EXISTS (SELECT 1 FROM StockTickData WHERE ts = \'{}\' AND stock_symbol = \'{}\')'.format(
+                    date, stock, low_price, high_price, open_price, close_price, volume, date, stock
                 )
             )  # TODO: Add fucntionality to ignore duplicates (UPSERT)!
 
+            cur.execute(update_stock_tick_data_query)
             cur.execute(insert_stock_tick_data_query)
             conn.commit()
 

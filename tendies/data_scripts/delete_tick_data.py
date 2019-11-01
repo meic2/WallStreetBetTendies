@@ -6,7 +6,7 @@ import requests
 import urllib
 
 
-def delete_stock_tick_from_db(stock_symbols):
+def delete_stock_tick_from_db(stock_symbol, start_date, end_date):
     conn = psycopg2.connect(
         host="fa19-cs411-048.cs.illinois.edu",
         database="wsb_tendies",
@@ -15,11 +15,14 @@ def delete_stock_tick_from_db(stock_symbols):
     )
     cur = conn.cursor()
 
-    for stock_symbol in stock_symbols:
-        delete_stock_tick_data_query = \
-            'DELETE FROM StockTickData WHERE stock_symbol=\'{}\''.format(stock_symbol)
-        cur.execute(delete_stock_tick_data_query)
-        conn.commit()
+    delete_stock_tick_data_query = (
+        'DELETE FROM StockTickData WHERE stock_symbol=\'{}\''
+        'AND ts::DATE >= DATE \'{}\' AND ts <= DATE \'{}\''.format(
+            stock_symbol, start_date, end_date
+        )
+    )
+    cur.execute(delete_stock_tick_data_query)
+    conn.commit()
 
     cur.close()
 

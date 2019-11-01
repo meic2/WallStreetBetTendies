@@ -49,9 +49,9 @@ def get_stock_tick_data(request, stock_symbol, start_date, end_date):
     return JsonResponse(closing_prices)
 
 
-def delete_stock_tick_data(request, stock_symbol):
+def delete_stock_tick_data(request, stock_symbol, start_date, end_date):
     try:
-        delete_stock_tick_from_db([stock_symbol])
+        delete_stock_tick_from_db(stock_symbol, start_date, end_date)
         return JsonResponse({'status': 200})
     except (Exception, psycopg2.DatabaseError) as error:
         print('ERROR with deleting tick data: {}'.format(error))

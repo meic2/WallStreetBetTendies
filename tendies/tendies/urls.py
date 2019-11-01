@@ -26,7 +26,7 @@ urlpatterns = [
         name='get_stock_tick_data'
     ),
     path(
-        'delete_tick_data/<str:stock_symbol>',
+        'delete_tick_data/<str:stock_symbol>/<str:start_date>/<str:end_date>',
         delete_stock_tick_data,
         name='delete_stock_tick_data'
     ),
