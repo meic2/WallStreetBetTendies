@@ -25,9 +25,8 @@ def get_stock_tick_data(request, stock_symbol, start_date, end_date):
 
     get_stock_tick_data_query = (
         'SELECT ts, close_price FROM StockTickData WHERE stock_symbol = \'{}\''
-        'AND ts::DATE >= DATE \'{}\' AND ts <= DATE \'{}\''.format(
-            stock_symbol, start_date, end_date
-        )
+        'AND ts::DATE >= DATE \'{}\' AND ts <= DATE \'{}\''
+        'ORDER BY ts ASC'.format(stock_symbol, start_date, end_date)
     )
 
     print(get_stock_tick_data_query)
