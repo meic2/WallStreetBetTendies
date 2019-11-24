@@ -21,17 +21,17 @@ from .views import get_stock_tick_data, delete_stock_tick_data, insert_stock_tic
 urlpatterns = [
     path('admin/', admin.site.urls),
     path(
-        'tick_data/<str:stock_symbol>/<str:start_date>/<str:end_date>', 
+        'tick_data', 
         get_stock_tick_data, 
         name='get_stock_tick_data'
     ),
     path(
-        'delete_tick_data/<str:stock_symbol>/<str:start_date>/<str:end_date>',
+        'delete_tick_data',
         delete_stock_tick_data,
         name='delete_stock_tick_data'
     ),
     path(
-        'insert_tick_data/<str:stock_symbol>',
+        'insert_tick_data',
         insert_stock_tick_data,
         name='insert_stock_tick_data'
     )

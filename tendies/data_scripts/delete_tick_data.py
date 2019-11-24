@@ -6,7 +6,7 @@ import requests
 import urllib
 
 
-def delete_stock_tick_from_db(stock_symbol, start_date, end_date):
+def delete_tick_data_from_db(stock_symbol, start_date, end_date):
     conn = psycopg2.connect(
         host="fa19-cs411-048.cs.illinois.edu",
         database="wsb_tendies",
@@ -25,10 +25,3 @@ def delete_stock_tick_from_db(stock_symbol, start_date, end_date):
     conn.commit()
 
     cur.close()
-
-'''
-try:
-    delete_stock_tick_from_db(['FB', 'AMZN'])
-except (Exception, psycopg2.DatabaseError) as error:
-    print('ERROR with deleting tick data: ', error)
-'''
