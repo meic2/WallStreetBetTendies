@@ -19,7 +19,9 @@ https://www.a2hosting.com/kb/developer-corner/testing-and-development/creating-a
 4. Uncomment listen_address and port line in postgresql.conf. Update localhost to '*' and add 'host 0.0.0.0/0' to accept non-local connections.
 5. Restart Postgres service and add database settings in Django project under settings.py. 
 
+## Start Project on Server:
+```python3 manage.py runserver <server_ip_addr>:8000```
+
 ## Endpoints:
 1. Stock Tick Data endpoint: <br>
 ```tick_data/AAPL/2017-01-01/2017-01-30``` <br>
-2. 
