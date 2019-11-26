@@ -22,6 +22,10 @@ https://www.a2hosting.com/kb/developer-corner/testing-and-development/creating-a
 ## Start Project on Server:
 ```python3 manage.py runserver <server_ip_addr>:8000```
 
+## Open Jupyter notebook on remote server via local browser:
+1. Run ```ssh -L 8000:localhost:8888 user@ip_addr``` to connect to remote server.
+2. Then start jupyter notebook and navigate to locahost:8000. 
+
 ## Endpoints:
 1. Stock Tick Data endpoint: <br>
 ```tick_data/AAPL/2017-01-01/2017-01-30``` <br>
