@@ -30,9 +30,9 @@ def load_tick_data(stock_symbols):
         stock_data = requests.get('https://www.alphavantage.co/query?{}'.format(urllib.parse.urlencode(symbol_params))).json()
         keys = stock_data.keys()
         if 'Time Series (Daily)' not in keys:
-            print(stock_data)
+            print('Exceeded AlphaVantage API calls: ', stock_data)
         else:
-            print(keys)
+            print('AlphaVantage API call succeeded: ', keys)
         symbol_tick_data = stock_data['Time Series (Daily)']
         symbols_tick_data[symbol] = symbol_tick_data
 
@@ -101,10 +101,15 @@ while not all_tick_data_uploaded:
     end_idx = start_idx + 5 if start_idx + 5 <= len(all_stocks) else len(all_stocks)
     stocks = all_stocks[start_idx:end_idx]
     tick_data = load_tick_data(stocks)
-    stock_idx += 5
-    time.sleep(60)  # Done because AlphaVantage API only allows 5 requests per minute
+    start_idx += 5
 
-try:
-    upload_to_db(tech_stock_tick_data)
-except (Exception, psycopg2.DatabaseError) as error:
-    print('ERROR with uploading tick data: ', error)
+    start_time = time.time()
+    try:
+        upload_to_db(tick_data)
+        print('Uploaded tick data of stocks: ', stocks)
+    except (Exception, psycopg2.DatabaseError) as error:
+        print('ERROR with uploading tick data: ', str(error))
+    end_time = time.time()
+    print('Insert 5 stocks\' tick data query duration in seconds: ', end_time - start_time)
+
+    time.sleep(30)  # Done because AlphaVantage API only allows 5 requests per minute
