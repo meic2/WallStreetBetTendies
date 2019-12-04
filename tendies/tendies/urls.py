@@ -16,7 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
-from .views import get_stock_tick_data, delete_stock_tick_data, insert_stock_tick_data
+from .views import get_stock_tick_data, delete_stock_tick_data, insert_stock_tick_data, get_subreddit_sentiment_disagreement, get_sentiment_popularity_correlation
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -34,5 +34,15 @@ urlpatterns = [
         'insert_tick_data',
         insert_stock_tick_data,
         name='insert_stock_tick_data'
+    ),
+    path(
+        'subreddit_sentiment_disagreement',
+        get_subreddit_sentiment_disagreement,
+        name='get_subreddit_sentiment_disagreement'
+    ),
+    path(
+        'sentiment_popularity_correlation',
+        get_sentiment_popularity_correlation,
+        name='get_sentiment_popularity_correlation'
     )
 ]

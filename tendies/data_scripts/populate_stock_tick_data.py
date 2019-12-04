@@ -79,6 +79,7 @@ def upload_to_db(stock_tick_data):
 
     cur.close()
 
+'''
 tech_stocks = [
     'AAPL', 'GOOG', 'FB', 'MSFT', 'AMZN', 'TSLA', 'NFLX', 'AMD', 
     'CSCO', 'TWTR', 'SNAP', 'CRM', 'NVDA'
@@ -113,3 +114,4 @@ while not all_tick_data_uploaded:
     print('Insert 5 stocks\' tick data query duration in seconds: ', end_time - start_time)
 
     time.sleep(30)  # Done because AlphaVantage API only allows 5 requests per minute
+'''
