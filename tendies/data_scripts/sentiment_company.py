@@ -3,12 +3,10 @@ import datetime
 import json
 import pymongo
 import psycopg2
-import requests
-from string import printable
-import urllib
 
 
-def get_sentiment_count(company_name):
+
+def get_sentiment_count(company_name, subreddit):
     conn = psycopg2.connect(
     host="fa19-cs411-048.cs.illinois.edu",
     database="wsb_tendies",
@@ -16,7 +14,7 @@ def get_sentiment_count(company_name):
     password="411_wsb_tendies")
     cur = conn.cursor()
 
-    client = pymongo.MongoClient("mongodb://localhost:27018")
+    client = pymongo.MongoClient("mongodb://localhost:27017")
     wsb_mongo_db = client['wsb_tendies']
     post_keywords_collection = wsb_mongo_db['post_keywords']
     # comment_keywords_collection = wsb_mongo_db['comment_keywords']
@@ -29,21 +27,22 @@ def get_sentiment_count(company_name):
         ]
 
     document = post_keywords_collection.aggregate(query)
-    print("connect to db")
     positive_post = 0
     negative_post = 0
     upvote = 0
     number_post = 0
+    dict_vote = {'positive_post': 0, 'negative_post': 0, 'average_upvote_wsb': 0,}
     for post in document: 
         number_post+=1
-        post_id = post['post_id']   
+        post_id = post['post_id'] 
         try:
             cur.execute(
-                'SELECT sentiment_score, num_upvotes FROM post WHERE post_id = \'{}\''.format(post_id)
+                'SELECT sentiment_score, num_upvotes, subreddit_name FROM post WHERE post_id = \'{}\''.format(post_id)
             )
             rows = cur.fetchall()
             for row in rows:
-                print (row)
+                if row[2] != subreddit:
+                    break
                 sentiment_score = float(row[0])
                 upvote += int(row[1])
                 if sentiment_score > 0 : positive_post += 1
@@ -54,8 +53,8 @@ def get_sentiment_count(company_name):
                 raise Exception(error)
     average_upvote = upvote/number_post
     dict_vote = {'positive_post': positive_post, 'negative_post': negative_post, 'average_upvote': average_upvote}
-    print(dict_vote)
+    #print(dict_vote)
     return dict_vote
 
 
-get_sentiment_count('tesla')
+get_sentiment_count('tesla', 'wallstreetbets')
