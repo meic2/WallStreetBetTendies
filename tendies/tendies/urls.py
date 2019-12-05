@@ -23,7 +23,8 @@ from .views import (
     get_subreddit_sentiment_disagreement, 
     get_sentiment_popularity_correlation, 
     get_moving_volatility,
-    get_sentiment_count
+    get_sentiment_count,
+    get_company_keywords
 )
 
 urlpatterns = [
@@ -62,5 +63,10 @@ urlpatterns = [
         'sentiment_count',
         get_sentiment_count,
         name='get_sentiment_count'
+    ),
+    path(
+        'company_keywords',
+        get_company_keywords,
+        name='get_company_keywords'
     )
 ]

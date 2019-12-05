@@ -115,3 +115,30 @@ Example Output: <br>
         "average_upvote": 149.94155844155844
     }
 }
+
+6. Most Common Keywords Associated with Company: <br>
+```http://172.22.158.49:8000/company_keywords?&company=wework&subreddit_name=stocks```
+Example Output: <br>
+{
+    "status": 200,
+    "res": [
+        {
+            "stock": 192
+        },
+        {
+            "tesla": 147
+        },
+        {
+            "global": 78
+        },
+        {
+            "price": 76
+        },
+        {
+            "ideas": 73
+        },
+        {
+            "share": 64
+        }
+    ]
+}
