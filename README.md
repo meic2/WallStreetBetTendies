@@ -29,15 +29,96 @@ https://www.a2hosting.com/kb/developer-corner/testing-and-development/creating-a
 ## Endpoints:
 1. Stock Tick Data endpoint: <br>
 ```tick_data?stock_symbol=MSFT&start_date=2018-12-01&end_date=2019-12-01``` <br>
+Example Output: <br>
+{
+    "status": 200,
+    "res": [
+        {
+            "p_month": "Dec",
+            "p_sentiment": 0.0305337420910414,
+            "c_sentiment": 0.0467179359582487,
+            "other_p_sentiment": -0.00413696654991213,
+            "other_c_sentiment": 0.0682914612315927
+        },
+        {
+            "p_month": "Aug",
+            "p_sentiment": 0.128351886190842,
+            "c_sentiment": 0.0964967767254736,
+            "other_p_sentiment": -0.0301804664066544,
+            "other_c_sentiment": 0.0778370680971779
+        }
+    ]
+}
 
 2. Moving Volatility endpoint: <br>
 ```moving_volatility?&stock_symbol=AAPL&start_date=2017-10-01&end_date=2019-01-01``` <br>
+Example Output: <br>
+{
+    "status": 200,
+    "res": [
+        {
+            "stock_symbol": "AAPL",
+            "ts": "2018-05-25 00:00:00",
+            "moving_10_volatility": 0.00269582245382441,
+            "moving_30_volatility": 0.00704960800986764
+        },
+        {
+            "stock_symbol": "AAPL",
+            "ts": "2018-05-29 00:00:00",
+            "moving_10_volatility": 0.00254678002178621,
+            "moving_30_volatility": 0.00706563446594377
+        },
+        {
+            "stock_symbol": "AAPL",
+            "ts": "2018-05-30 00:00:00",
+            "moving_10_volatility": 0.00254388242147337,
+            "moving_30_volatility": 0.00706686429586809
+        },
+        {
+            "stock_symbol": "AAPL",
+            "ts": "2018-05-31 00:00:00",
+            "moving_10_volatility": 0.0022636742034069,
+            "moving_30_volatility": 0.00701587375850883
+        }
+    ]
+}
 
 3. Subreddit Sentiment Disagreement endpoint: <br>
 ```subreddit_sentiment_disagreement?&subreddit_name=wallstreetbets&start_date=2018-12-01&end_date=2019-12-01``` <br>
+Example Output: <br>
+{
+    "status": 200,
+    "res": [
+        {
+            "p_month": "Dec",
+            "p_sentiment": 0.0305337420910414,
+            "c_sentiment": 0.0467179359582487,
+            "other_p_sentiment": -0.00413696654991213,
+            "other_c_sentiment": 0.0682914612315927
+        },
+        {
+            "p_month": "Aug",
+            "p_sentiment": 0.128351886190842,
+            "c_sentiment": 0.0964967767254736,
+            "other_p_sentiment": -0.0301804664066544,
+            "other_c_sentiment": 0.0778370680971779
+        }
+    ]
+}
 
 4. Sentiment Popularity Correlation endpoint: <br>
 ```sentiment_popularity_correlation?&subreddit_name=investing``` <br>
+Example Output: <br>
+
 
 5. Company Sentiment Count endpoint: <br>
 ```sentiment_count?&company=tesla&subreddit_name=stocks``` <br>
+Example Output: <br>
+{
+    "status": 200,
+    "res": {
+        "positive_post": 45,
+        "negative_post": 17,
+        "average_upvote": 149.94155844155844
+    }
+}
