@@ -62,6 +62,7 @@ def insert_stock_tick_data(request):
 def get_subreddit_sentiment_disagreement(request):
     try:
         subreddit_name = request.GET['subreddit_name']
+        subreddit_name_2 = request.GET['subreddit_name_2']
         start_date = request.GET['start_date']
         end_date = request.GET['end_date']
     except KeyError as e:
@@ -70,7 +71,7 @@ def get_subreddit_sentiment_disagreement(request):
 
     try:
         query_filename = 'sql_scripts/subreddit_sentiment_disagreement.sql'
-        res = get_subreddit_sentiment_disagreement_res(query_filename, subreddit_name, start_date, end_date)
+        res = get_subreddit_sentiment_disagreement_res(query_filename, subreddit_name, subreddit_name_2, start_date, end_date)
         return JsonResponse({'status': 200, 'res': res})
     except (Exception, psycopg2.DatabaseError) as error:
         print('ERROR with getting subreddit sentiment disagreement data: ', error)

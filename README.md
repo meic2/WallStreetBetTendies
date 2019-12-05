@@ -28,7 +28,7 @@ https://www.a2hosting.com/kb/developer-corner/testing-and-development/creating-a
 
 ## Endpoints:
 1. Stock Tick Data endpoint: <br>
-```tick_data?stock_symbol=MSFT&start_date=2018-12-01&end_date=2019-12-01``` <br>
+```http://172.22.158.49:8000/tick_data?stock_symbol=AAPL&start_date=2018-12-01&end_date=2019-12-01``` <br>
 Example Output: <br>
 {
     "MSFT": [
@@ -44,7 +44,7 @@ Example Output: <br>
 }
 
 2. Moving Volatility endpoint: <br>
-```moving_volatility?&stock_symbol=AAPL&start_date=2017-10-01&end_date=2019-01-01``` <br>
+```http://172.22.158.49:8000/moving_volatility?stock_symbol=AAPL&start_date=2018-10-01&end_date=2019-01-01``` <br>
 Example Output: <br>
 {
     "status": 200,
@@ -77,7 +77,7 @@ Example Output: <br>
 }
 
 3. Subreddit Sentiment Disagreement endpoint: <br>
-```subreddit_sentiment_disagreement?&subreddit_name=wallstreetbets&start_date=2018-12-01&end_date=2019-12-01``` <br>
+```http://172.22.158.49:8000/subreddit_sentiment_disagreement?&subreddit_name=stocks&subreddit_name_2=investing&start_date=2018-12-01&end_date=2019-12-01``` <br>
 Example Output: <br>
 {
     "status": 200,
@@ -100,12 +100,12 @@ Example Output: <br>
 }
 
 4. Sentiment Popularity Correlation endpoint: <br>
-```sentiment_popularity_correlation?&subreddit_name=investing``` <br>
+```http://172.22.158.49:8000/sentiment_popularity_correlation?&subreddit_name=investing``` <br>
 Example Output: <br>
 
 
 5. Company Sentiment Count endpoint: <br>
-```sentiment_count?&company=tesla&subreddit_name=stocks``` <br>
+```http://172.22.158.49:8000/sentiment_count?&company=tesla&subreddit_name=stocks``` <br>
 Example Output: <br>
 {
     "status": 200,

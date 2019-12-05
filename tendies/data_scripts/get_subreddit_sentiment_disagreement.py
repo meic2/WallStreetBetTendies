@@ -7,7 +7,7 @@ from string import printable
 import urllib
 
 
-def get_subreddit_sentiment_disagreement_res(query_filename, subreddit_name, start_date, end_date):
+def get_subreddit_sentiment_disagreement_res(query_filename, subreddit_name, subreddit_name_2, start_date, end_date):
     conn = psycopg2.connect(
         host="fa19-cs411-048.cs.illinois.edu",
         database="wsb_tendies",
@@ -17,7 +17,7 @@ def get_subreddit_sentiment_disagreement_res(query_filename, subreddit_name, sta
 
     with open(query_filename, 'r') as q:
         subreddit_sentiment_disagreement_query = q.read().format(
-            start_date, end_date, subreddit_name, start_date, end_date
+            subreddit_name_2, start_date, end_date, subreddit_name, start_date, end_date
         ).strip()
         # subreddit_sentiment_disagreement_query = """select wsb.p_month, wsb.p_sentiment, wsb.c_sentiment, allOther.p_sentiment, allOther.c_sentiment from (select TO_CHAR(p.post_date,'Mon') as p_month, avg(p.sentiment_score) as p_sentiment, avg(c.sentiment_score) as c_sentiment from Post p join Comment c on p.post_id = c.post_id where p.subreddit_name in ('investing','stocks','StockMarket','economy') and p.post_date::DATE >= DATE '2018-12-01' and p.post_date::DATE < DATE '2019-12-01' group by p_month) as allOther, (select TO_CHAR(p.post_date,'Mon') as p_month, avg(p.sentiment_score) as p_sentiment, avg(c.sentiment_score) as c_sentiment from Post p join Comment c on p.post_id = c.post_id where p.subreddit_name='wallstreetbets' and p.post_date::DATE >= DATE '2018-12-01' and p.post_date::DATE < DATE '2019-12-01' group by p_month) as wsb where allOther.p_month = wsb.p_month and (wsb.p_sentiment > 0.0 and allOther.p_sentiment < 0.0) or (wsb.c_sentiment > 0.0 and allOther.p_sentiment < 0.0);"""
         print('Query to retrieve subreddit sentiment disagreement: ', subreddit_sentiment_disagreement_query)
