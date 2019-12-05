@@ -5,9 +5,11 @@ import psycopg2
 
 from data_scripts.populate_stock_tick_data import load_tick_data, upload_to_db
 from data_scripts.delete_tick_data import delete_tick_data_from_db
+from data_scripts.get_moving_volatility import get_moving_volatility_res
 from data_scripts.get_tick_data import get_tick_data_from_db
 from data_scripts.get_subreddit_sentiment_disagreement import get_subreddit_sentiment_disagreement_res
 from data_scripts.get_sentiment_popularity_correlation import get_sentiment_popularity_correlation_res
+from data_scripts.sentiment_company import get_sentiment_count_res
 
 
 def get_stock_tick_data(request):
@@ -89,3 +91,37 @@ def get_sentiment_popularity_correlation(request):
     except (Exception, psycopg2.DatabaseError) as error:
         print('ERROR with getting subreddit sentiment disagreement data: ', error)
         return JsonResponse({'status': 404, 'error': str(error)})
+
+
+def get_moving_volatility(request):
+    try:
+        stock_symbol = request.GET['stock_symbol']
+        start_date = request.GET['start_date']
+        end_date = request.GET['end_date']
+    except KeyError as e:
+        print('Bad client request: ', str(e))
+        return JsonResponse({'status': 400, 'error': 'Missing {} param'.format(str(e))})
+
+    try:
+        res = get_moving_volatility_res(stock_symbol, start_date, end_date)
+        return JsonResponse({'status': 200, 'res': res})
+    except (Exception, psycopg2.DatabaseError) as error:
+        print('ERROR with getting moving volatility data: ', error)
+        return JsonResponse({'status': 404, 'error': str(error)})
+
+
+def get_sentiment_count(request):
+    try:
+        company = request.GET['company']
+        subreddit_name = request.GET['subreddit_name']
+    except KeyError as e:
+        print('Bad client request: ', str(e))
+        return JsonResponse({'status': 400, 'error': 'Missing {} param'.format(str(e))})
+
+    try:
+        res = get_sentiment_count_res(company, subreddit_name)
+        return JsonResponse({'status': 200, 'res': res})
+    except (Exception, psycopg2.DatabaseError) as error:
+        print('ERROR with getting company sentiment data: ', error)
+        return JsonResponse({'status': 404, 'error': str(error)})
+    

@@ -28,4 +28,16 @@ https://www.a2hosting.com/kb/developer-corner/testing-and-development/creating-a
 
 ## Endpoints:
 1. Stock Tick Data endpoint: <br>
-```tick_data/AAPL/2017-01-01/2017-01-30``` <br>
+```tick_data?stock_symbol=MSFT&start_date=2018-12-01&end_date=2019-12-01``` <br>
+
+2. Moving Volatility endpoint: <br>
+```moving_volatility?&stock_symbol=AAPL&start_date=2017-10-01&end_date=2019-01-01``` <br>
+
+3. Subreddit Sentiment Disagreement endpoint: <br>
+```subreddit_sentiment_disagreement?&subreddit_name=wallstreetbets&start_date=2018-12-01&end_date=2019-12-01``` <br>
+
+4. Sentiment Popularity Correlation endpoint: <br>
+```sentiment_popularity_correlation?&subreddit_name=investing``` <br>
+
+5. Company Sentiment Count endpoint: <br>
+```sentiment_count?&company=tesla&subreddit_name=stocks``` <br>

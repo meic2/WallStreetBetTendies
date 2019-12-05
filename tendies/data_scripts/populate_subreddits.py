@@ -191,7 +191,7 @@ def upload_subreddit_posts_and_comments(reddit, subreddit_name, conn, post_keywo
     cur = conn.cursor()
 
     # Get all the top posts of subreddit from past year
-    top_posts_past_year = subreddit.top(time_filter='year', limit=100)
+    top_posts_past_year = subreddit.top(time_filter='year', limit=500)
     for post in top_posts_past_year:
         upload_post(post, subreddit_name, cur, post_keywords_collection)
         print('Uploaded post info: ', post.title)
