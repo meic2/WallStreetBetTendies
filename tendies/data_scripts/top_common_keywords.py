@@ -1,0 +1,84 @@
+import collections
+import datetime
+import pymongo
+
+
+
+#return format: 
+#Tesla: {wsb: [keyword1, keyword2, keyword3, keyword4, keyword5]}
+'''
+@input: compnay_name: compnay name; number_keyword: number of top_correlated keywords
+@return: dictionary that contains list of top keywords and counts for each subreddit counts
+'''
+def get_top_keywords(company_name, number_keyword = 5):
+
+
+    client = pymongo.MongoClient("mongodb://localhost:27018")
+    wsb_mongo_db = client['wsb_tendies']
+    post_keywords_collection = wsb_mongo_db['post_keywords']
+    
+    # find all correlating post_ids 
+    query = [
+        {"$project": {"data": {"$objectToArray":"$keywords"}, "post_id": 1}},
+        {"$unwind": "$data"},
+        {"$match": {"data.k": company_name}},
+        {"$project": {"post_id": 1, "_id":0}}
+        ]
+
+    document = post_keywords_collection.aggregate(query)
+    list_post_id = []
+    for post in document: 
+
+        post_id = post['post_id'] 
+        list_post_id.append(post_id)
+
+    # find the corresponding keywords in the post_db
+    query2 = [
+        {"$match": {"post_id": {"$in": list_post_id}}},
+        {"$project": {"data": {"$objectToArray":"$keywords"}, "subreddit_name": 1}},
+        {"$unwind": "$data"},
+        {"$group": {
+            "_id" : {"keyword": "$data.k", 
+                    "subreddit": "$subreddit_name"},
+            "total" : {"$sum": "$data.v" },
+        }},
+        {"$project": {
+            "total":1, 
+            "keyword": "$_id.keyword",
+            "subreddit": "$_id.subreddit",
+            "_id": 0
+        }},
+        {"$match": {
+            "keyword": {"$ne": ""}
+        }},
+        {"$sort": {"total": -1}}
+        ]
+    
+    keyword_count = post_keywords_collection.aggregate(query2)
+
+    subreddit_category = ['StockMarket', 'investing', 'economy', 'wallstreetbets', 'stocks']
+    dict_keyword = {}
+
+    #initialize the dictionary that hold the keyword 
+    for subreddit in subreddit_category:
+        dict_keyword[subreddit] = []
+
+    #import data into the dictionary 
+    for keyword_record in keyword_count: 
+        subred = keyword_record['subreddit']
+        count =  keyword_record['total']
+        keyword =  keyword_record['keyword']
+        if (len(dict_keyword[subred]) > number_keyword):
+            continue
+        dict_keyword[subred].append({keyword: count})
+
+    return dict_keyword
+
+   
+if __name__ == "__main__":
+    dict_keyword = get_top_keywords('tesla', number_keyword=5)
+    for i in dict_keyword.keys():
+        print(i, dict_keyword[i])
+
+
+#ssh -L27018:localhost:27017 meic2@fa19-cs411-048.cs.illinois.edu
