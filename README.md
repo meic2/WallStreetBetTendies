@@ -142,3 +142,9 @@ Example Output: <br>
         }
     ]
 }
+
+7. Delete Tick Data: <br>
+```http://172.22.158.49:8000/delete_tick_data?stock_symbol=AAPL&start_date=2018-12-01&end_date=2019-12-01``` <br>
+
+8. Insert Tick Data: <br>
+```http://172.22.158.49:8000/insert_tick_data?stock_symbol=AAPL```
