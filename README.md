@@ -31,21 +31,14 @@ https://www.a2hosting.com/kb/developer-corner/testing-and-development/creating-a
 ```tick_data?stock_symbol=MSFT&start_date=2018-12-01&end_date=2019-12-01``` <br>
 Example Output: <br>
 {
-    "status": 200,
-    "res": [
+    "MSFT": [
         {
-            "p_month": "Dec",
-            "p_sentiment": 0.0305337420910414,
-            "c_sentiment": 0.0467179359582487,
-            "other_p_sentiment": -0.00413696654991213,
-            "other_c_sentiment": 0.0682914612315927
+            "date": "2018-12-03T00:00:00",
+            "close_price": 112.09
         },
         {
-            "p_month": "Aug",
-            "p_sentiment": 0.128351886190842,
-            "c_sentiment": 0.0964967767254736,
-            "other_p_sentiment": -0.0301804664066544,
-            "other_c_sentiment": 0.0778370680971779
+            "date": "2018-12-04T00:00:00",
+            "close_price": 108.52
         }
     ]
 }
